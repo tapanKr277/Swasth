@@ -52,5 +52,5 @@ jobs:
       - name: Upload JAR Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: swasth-jar
-          path: target/swasth-id-backend-*.jar # update this to your actual jar name
+          name: swasth
+          path: target/swasth.jar

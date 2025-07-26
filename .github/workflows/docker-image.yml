@@ -18,7 +18,7 @@ jobs:
       - name: Download JAR Artifact
         uses: actions/download-artifact@v4
         with:
-          name: swasth-jar
+          name: swasth
           path: target/
 
       - name: Set up Docker Buildx

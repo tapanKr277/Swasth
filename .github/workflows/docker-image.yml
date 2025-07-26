@@ -2,7 +2,7 @@ name: Docker Build & Push
 
 on:
   workflow_run:
-    workflows: ["Django Action"]
+    workflows: ["Build and Test - Swasth Backend"]
     types:
       - completed
 

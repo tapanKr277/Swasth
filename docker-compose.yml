@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: swasth:latest
+    image: tapankr277/swasth:latest
     ports:
       - "8080:8080"
     depends_on:

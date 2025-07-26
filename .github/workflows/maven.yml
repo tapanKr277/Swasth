@@ -1,14 +1,30 @@
-name: Build and Test - Swasth Backend
+name: Spring Boot CI with MySQL and Environment Variables
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          MYSQL_DATABASE: testdb
+          MYSQL_USER: ${{ secrets.DATABASE_USERNAME }}
+          MYSQL_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: Checkout code
@@ -17,30 +33,32 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
           distribution: 'temurin'
-          cache: maven
+          java-version: '21'
 
-      - name: Build with Maven (using build profile and H2)
-        run: mvn clean install -Dspring.profiles.active=build
-        env:
-          # JWT properties
-          JWT_SECRET: dummy_jwt_secret
-          TOKEN_EXPIRATION_TIME: 600000
-          REFRESH_TOKEN_EXPIRATION_TIME: 1200000
+      - name: Set environment variables
+        run: |
+          echo "SERVER_PORT=8080" >> $GITHUB_ENV
+          echo "DATABASE_URL=jdbc:mysql://localhost:3306/testdb" >> $GITHUB_ENV
+          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> $GITHUB_ENV
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
 
-          # Mail properties (dummy)
-          MAIL_USERNAME: dummy@gmail.com
-          MAIL_PASSWORD: dummy_password
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+          echo "TOKEN_EXPIRATION_TIME=900000" >> $GITHUB_ENV
+          echo "REFRESH_TOKEN_EXPIRATION_TIME=604800000" >> $GITHUB_ENV
 
-          # OAuth properties (dummy)
-          GOOGLE_CLIENT_ID: dummy_google_client_id
-          GOOGLE_CLIENT_SECRET: dummy_google_client_secret
-          GOOGLE_REDIRECT_URI: http://localhost:3000/oauth2/callback/google
+          echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}" >> $GITHUB_ENV
+          echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> $GITHUB_ENV
 
-          GITHUB_CLIENT_ID: dummy_github_client_id
-          GITHUB_CLIENT_SECRET: dummy_github_client_secret
-          GITHUB_REDIRECT_URI: http://localhost:3000/oauth2/callback/github
+          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "GOOGLE_REDIRECT_URI=http://localhost:8080/oauth2/callback/google" >> $GITHUB_ENV
 
-          # Frontend URL
-          FRONTEND_URL: http://localhost:3000
+          echo "GITHUB_CLIENT_ID=${{ secrets.GITHUB_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "GITHUB_CLIENT_SECRET=${{ secrets.GITHUB_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "GITHUB_REDIRECT_URI=http://localhost:8080/oauth2/callback/github" >> $GITHUB_ENV
+
+          echo "FRONTEND_URL=http://localhost:3000" >> $GITHUB_ENV
+
+      - name: Build and test with Maven
+        run: mvn clean install

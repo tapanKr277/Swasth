@@ -25,14 +25,14 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: swasth_db
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test_db
         options: --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=3
 
     env:
-      DATABASE_URL: jdbc:mysql://localhost:3306/testdb
+      DATABASE_URL: jdbc:mysql://localhost:3306/test_db
       DB_USERNAME: root
-      DB_PASSWORD: root
+      DB_PASSWORD: password
   
     steps:
     - uses: actions/checkout@v4

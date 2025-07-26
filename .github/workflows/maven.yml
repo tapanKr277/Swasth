@@ -92,27 +92,3 @@ jobs:
           GITHUB_REDIRECT_URI: http://localhost:8080/oauth2/callback/github
 
           FRONTEND_URL: http://localhost:3000
-
-      - name: Run tests with Maven
-        run: mvn test
-        env:
-          SERVER_PORT: 8080
-          DATABASE_URL: jdbc:mysql://localhost:3306/test_db
-          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          TOKEN_EXPIRATION_TIME: 900000
-          REFRESH_TOKEN_EXPIRATION_TIME: 604800000
-
-          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
-          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          GOOGLE_REDIRECT_URI: http://localhost:8080/oauth2/callback/google
-
-          GITHUB_CLIENT_ID: ${{ secrets.GITHUB_CLIENT_ID }}
-          GITHUB_CLIENT_SECRET: ${{ secrets.GITHUB_CLIENT_SECRET }}
-          GITHUB_REDIRECT_URI: http://localhost:8080/oauth2/callback/github
-
-          FRONTEND_URL: http://localhost:3000

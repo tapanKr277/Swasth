@@ -51,11 +51,24 @@ jobs:
       - name: Build with Maven
         run: mvn clean install -DskipTests
 
-      - name: Upload JAR Artifact (optional)
-        uses: actions/upload-artifact@v4
-        with:
-          name: swasth
-          path: target/swasth.jar
+      - name: Generate .env file
+        run: |
+          echo "SERVER_PORT=8080" >> .env
+          echo "DATABASE_URL=jdbc:mysql://localhost:3306/test_db" >> .env
+          echo "DATABASE_USERNAME=root" >> .env
+          echo "DATABASE_PASSWORD=password" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "TOKEN_EXPIRATION_TIME=600000" >> .env
+          echo "REFRESH_TOKEN_EXPIRATION_TIME=1200000" >> .env
+          echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}" >> .env
+          echo "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}" >> .env
+          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+          echo "GOOGLE_REDIRECT_URI=http://localhost:8080/oauth2/callback/google" >> .env
+          echo "GITHUB_CLIENT_ID=${{ secrets.GITHUB_CLIENT_ID }}" >> .env
+          echo "GITHUB_CLIENT_SECRET=${{ secrets.GITHUB_CLIENT_SECRET }}" >> .env
+          echo "GITHUB_REDIRECT_URI=http://localhost:8080/oauth2/callback/github" >> .env
+          echo "FRONTEND_URL=http://localhost:3000" >> .env
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -66,7 +79,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push Docker Image
+      - name: Build and Push Docker Image using Compose
         run: |
           docker compose -f docker-compose.yml build
           docker compose -f docker-compose.yml push

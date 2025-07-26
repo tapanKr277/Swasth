@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  swasth_db:
+    image: mysql:8.0
+    container_name: swasth_db
+    restart: always
+    ports:
+      - "3308:3306"
+    env_file:
+      - ./.env
+    environment:
+#      MYSQL_USER: ${DATABASE_USERNAME}  Do not set MYSQL_USER to root, as the root user is created by default. Only use MYSQL_USER to define a separate non-root user.
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - swasth-net
+
+  backend:
+    container_name: swasth
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: swasth:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - swasth_db
+    restart: always
+    env_file:
+      - ./.env
+    networks:
+      - swasth-net
+
+volumes:
+  mysql_data:
+
+networks:
+  swasth-net:

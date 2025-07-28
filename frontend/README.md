@@ -34,17 +34,16 @@
 ## 📁 Folder Structure
 
 src/
-├── app/ # Store config and App-level setup
-│ ├── store.js
-│ └── rootReducer.js
-├── features/ # Feature-based slices
-│ ├── auth/ # Authentication logic
-│ └── treatment/ # Treatment-related features
-├── components/ # Shared UI components
-├── pages/ # Page-level components (Dashboard, Login, etc.)
-├── utils/ # JWTService and helper functions
-└── index.js # App entry point
-
+├── app/                   # Store config and App-level setup
+│   ├── store.js
+│   └── rootReducer.js
+├── features/              # Feature-based slices
+│   ├── auth/              # Authentication logic
+│   └── treatment/         # Treatment-related features
+├── components/            # Shared UI components
+├── pages/                 # Page-level components (Dashboard, Login, etc.)
+├── utils/                 # JWTService and helper functions
+└── index.js               # App entry point
 
 ---
 

@@ -19,19 +19,22 @@
 
 ## 🧩 Tech Stack
 
-| Layer       | Technology                |
-|-------------|----------------------------|
+|-----------------------------------------------|
+| Layer       | Technology                      |
+|-------------|---------------------------------|
 | Frontend    | React, Redux Toolkit, RTK Query |
-| Styling     | Tailwind CSS (if used)     |
-| Auth        | JWT, Refresh Token         |
-| State Mgmt  | Redux Toolkit              |
-| Data Fetch  | RTK Query + Axios          |
-| Backend     | Spring Boot (microservices) |
-| Deployment  | Docker (optional)          |
+| Styling     | Tailwind CSS                    |
+| Auth        | JWT, Refresh Token              |
+| State Mgmt  | Redux Toolkit                   |
+| Data Fetch  | RTK Query + Axios               |
+| Backend     | Spring Boot                     |
+| Deployment  | Docker                          |
+|-----------------------------------------------|
 
 ---
 
 ## 📁 Folder Structure
+```bash
 
 src/
 ├── app/                   # Store config and App-level setup
@@ -45,6 +48,7 @@ src/
 ├── utils/                 # JWTService and helper functions
 └── index.js               # App entry point
 
+```
 ---
 
 ## 🛠️ Installation & Running Locally

@@ -19,7 +19,6 @@
 
 ## 🧩 Tech Stack
 
-|-----------------------------------------------|
 | Layer       | Technology                      |
 |-------------|---------------------------------|
 | Frontend    | React, Redux Toolkit, RTK Query |
@@ -29,7 +28,6 @@
 | Data Fetch  | RTK Query + Axios               |
 | Backend     | Spring Boot                     |
 | Deployment  | Docker                          |
-|-----------------------------------------------|
 
 ---
 

@@ -53,21 +53,22 @@ src/
 
 ### Prerequisites
 
-- Node.js >= 18.x
+- Node.js >= 22.x
 - npm or yarn
 
 ### Steps
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/swasth-frontend.git
-cd swasth-frontend
+git clone https://github.com/tapankr277/swasth.git
+
+cd swasth/frontend
 
 # Install dependencies
 npm install
 
 # Start development server
-npm start
+npm run dev
 ```
 
 🔑 Environment Variables

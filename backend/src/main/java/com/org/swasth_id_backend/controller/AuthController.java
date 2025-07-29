@@ -26,40 +26,43 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-;
 
 @RestController
 @RequestMapping("/api/auth")
 @Slf4j
 public class AuthController {
 
+    private final UserService userService;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsServiceImpl userDetailsService;
+    private final EmailService emailService;
+    private final VerificationTokenService verificationTokenService;
+    private final OtpService otpService;
+    private final PasswordResetOtpService passwordResetOtpService;
+    private final JwtTokenService jwtTokenService;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private JwtService jwtService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private VerificationTokenService verificationTokenService;
-
-    @Autowired
-    private OtpService otpService;
-
-    @Autowired
-    private PasswordResetOtpService passwordResetOtpService;
-
-    @Autowired
-    private JwtTokenService jwtTokenService;
+    public AuthController(
+        UserService userService,
+        JwtService jwtService,
+        AuthenticationManager authenticationManager,
+        UserDetailsServiceImpl userDetailsService,
+        EmailService emailService,
+        VerificationTokenService verificationTokenService,
+        OtpService otpService,
+        PasswordResetOtpService passwordResetOtpService,
+        JwtTokenService jwtTokenService
+    ) {
+        this.userService = userService;
+        this.jwtService = jwtService;
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.emailService = emailService;
+        this.verificationTokenService = verificationTokenService;
+        this.otpService = otpService;
+        this.passwordResetOtpService = passwordResetOtpService;
+        this.jwtTokenService = jwtTokenService;
+    }
 
 
     @PostMapping("/login")
